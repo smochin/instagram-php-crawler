@@ -21,32 +21,38 @@ class MediaFactory
      * @param array $dimension
      * @param int $created
      * @param User $user
+     * @param int $likes
+     * @param int $comments
      * @param bool $ad
      * @param mixed $caption
      * @param Location $location
      * @return Photo
      */
     public static function createPhoto(
-        int $id, 
-        string $code, 
-        string $url, 
-        array $dimension, 
-        int $created, 
-        User $user, 
-        bool $ad = false, 
-        $caption = null, 
+        int $id,
+        string $code,
+        string $url,
+        array $dimension,
+        int $created,
+        User $user,
+        int $likes = 0,
+        int $comments = 0,
+        bool $ad = false,
+        $caption = null,
         Location $location = null
     ): Photo {
         return new Photo(
-            $id, 
-            $code, 
-            $url, 
-            new Dimension($dimension['width'], $dimension['height']), 
-            new \DateTime("@{$created}"), 
-            $user, 
+            $id,
+            $code,
+            $url,
+            new Dimension($dimension['width'], $dimension['height']),
+            new \DateTime("@{$created}"),
+            $user,
             $caption ? self::extractHashtags($caption) : [],
-            $ad, 
-            $caption, 
+            $likes,
+            $comments,
+            $ad,
+            $caption,
             $location
         );
     }
@@ -60,40 +66,46 @@ class MediaFactory
      * @param array $dimension
      * @param int $created
      * @param User $user
+     * @param int $likes
+     * @param int $comments
      * @param bool $ad
      * @param mixed $caption
      * @param Location $location
      * @return Video
      */
     public static function createVideo(
-        int $id, 
-        string $code, 
-        string $url, 
-        string $thumb, 
-        int $views, 
-        array $dimension, 
-        int $created, 
-        User $user, 
-        bool $ad = false, 
-        $caption = null, 
+        int $id,
+        string $code,
+        string $url,
+        string $thumb,
+        int $views,
+        array $dimension,
+        int $created,
+        User $user,
+        int $likes = 0,
+        int $comments = 0,
+        bool $ad = false,
+        $caption = null,
         Location $location = null
     ): Video {
         return new Video(
-            $id, 
-            $code, 
-            $url, 
+            $id,
+            $code,
+            $url,
             $thumb,
             $views,
-            new Dimension($dimension['width'], $dimension['height']), 
-            new \DateTime("@{$created}"), 
-            $user, 
+            new Dimension($dimension['width'], $dimension['height']),
+            new \DateTime("@{$created}"),
+            $user,
             $caption ? self::extractHashtags($caption) : [],
-            $ad, 
-            $caption, 
+            $likes,
+            $comments,
+            $ad,
+            $caption,
             $location
         );
     }
-    
+
     private static function extractHashtags(string $caption): array
     {
         $tags = [];
@@ -102,7 +114,7 @@ class MediaFactory
                 return TagFactory::create($tag);
             }, array_values(array_unique($matches[1])));
         }
-        
+
         return $tags;
     }
 

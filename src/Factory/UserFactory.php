@@ -19,23 +19,37 @@ class UserFactory
      * @param mixed $verified
      * @param mixed $biography
      * @param mixed $website
+     * @param int $followers
+     * @param int $follows
+     * @param int $media
      * @return User
      */
     public static function create(
-            int $id, 
-            string $username, 
-            string $picture, 
-            $name = null, 
-            $privated = false, 
-            $verified = null, 
-            $biography = null, 
-            $website = null
+            int $id,
+            string $username,
+            string $picture,
+            $name = null,
+            $privated = false,
+            $verified = null,
+            $biography = null,
+            $website = null,
+            $followers = 0,
+            $follows = 0,
+            $media = 0
     ): User {
         return new User(
-                $id, 
-                $username, 
-                $picture, 
-                new Profile($privated, $verified, $biography, $website),
+                $id,
+                $username,
+                $picture,
+                new Profile(
+                  $privated,
+                  $verified,
+                  $biography,
+                  $website,
+                  $followers,
+                  $follows,
+                  $media
+                ),
                 $name
         );
     }

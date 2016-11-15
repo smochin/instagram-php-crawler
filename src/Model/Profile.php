@@ -28,21 +28,42 @@ class Profile
     private $verified;
 
     /**
+     * @var int
+     */
+    private $followers = 0;
+
+    /**
+     * @var int
+     */
+    private $follows = 0;
+
+    /**
+     * @var int
+     */
+    private $media = 0;
+
+    /**
      * @param bool $privated
      * @param mixed $verified
      * @param mixed $biography
      * @param mixed $website
      */
     public function __construct(
-        bool $privated = false, 
-        $verified = null, 
-        $biography = null, 
-        $website = null
+        bool $privated = false,
+        $verified = null,
+        $biography = null,
+        $website = null,
+        $followers = 0,
+        $follows = 0,
+        $media = 0
     ) {
         $this->privated = $privated;
         $this->verified = $verified;
         $this->biography = $biography;
         $this->website = $website;
+        $this->followers = $followers;
+        $this->follows = $follows;
+        $this->media = $media;
     }
 
     /**
@@ -80,6 +101,30 @@ class Profile
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowersCount(): int
+    {
+        return $this->followers;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowsCount(): int
+    {
+        return $this->follows;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMediaCount(): int
+    {
+        return $this->media;
     }
 
 }

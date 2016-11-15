@@ -3,6 +3,8 @@
 [![Join the chat at https://gitter.im/smochin/instagram-php-crawler](https://badges.gitter.im/smochin/instagram-php-crawler.svg)](https://gitter.im/smochin/instagram-php-crawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Total Downloads](https://img.shields.io/packagist/dt/smochin/instagram-php-crawler.svg?style=flat-square)](https://packagist.org/packages/smochin/instagram-php-crawler)
 [![Latest Stable Version](https://img.shields.io/packagist/v/smochin/instagram-php-crawler.svg?style=flat-square)](https://packagist.org/packages/smochin/instagram-php-crawler)
+![Branch master](https://img.shields.io/badge/branch-master-brightgreen.svg?style=flat-square)
+[![Build Status](https://img.shields.io/travis/smochin/instagram-php-crawler/master.svg?style=flat-square)](http://travis-ci.org/#!/smochin/instagram-php-crawler)
 
 A simple PHP Crawler for [Instagram](https://instagram.com).
 

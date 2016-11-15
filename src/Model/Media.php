@@ -39,11 +39,21 @@ abstract class Media
      * @var string
      */
     protected $url;
-    
+
     /**
      * @var Dimension
      */
     protected $dimension;
+
+    /**
+     * @var int
+     */
+    protected $likes = 0;
+
+    /**
+     * @var int
+     */
+    protected $comments = 0;
 
     /**
      * @var bool
@@ -54,7 +64,7 @@ abstract class Media
      * @var Location
      */
     private $location = null;
-    
+
     /**
      * @var array
      */
@@ -68,21 +78,25 @@ abstract class Media
      * @param \DateTime $created
      * @param User $user
      * @param array $tags
+     * @param int $likes
+     * @param int $comments
      * @param bool $ad
      * @param mixed $caption
      * @param Location $location
-     * 
+     *
      */
     public function __construct(
-        int $id, 
-        string $code, 
-        string $url, 
-        Dimension $dimension, 
-        \DateTime $created, 
-        User $user, 
-        array $tags = [], 
-        bool $ad = false, 
-        $caption = null, 
+        int $id,
+        string $code,
+        string $url,
+        Dimension $dimension,
+        \DateTime $created,
+        User $user,
+        array $tags = [],
+        int $likes = 0,
+        int $comments = 0,
+        bool $ad = false,
+        $caption = null,
         Location $location = null
     ) {
         $this->id = $id;
@@ -92,8 +106,10 @@ abstract class Media
         $this->created = $created;
         $this->user = $user;
         $this->tags = $tags;
-        $this->caption = $caption;
+        $this->likes = $likes;
+        $this->comments = $comments;
         $this->ad = $ad;
+        $this->caption = $caption;
         $this->location = $location;
     }
 
@@ -160,15 +176,31 @@ abstract class Media
     {
         return $this->url;
     }
-    
+
     public function getTags(): array
     {
         return $this->tags;
     }
-    
+
     public function getDimension(): Dimension
     {
         return $this->dimension;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikesCount(): int
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentsCount(): int
+    {
+        return $this->comments;
     }
 
 }

@@ -2,6 +2,7 @@
     "name": "smochin/instagram-php-crawler",
     "description": "A simple PHP Crawler for Instagram",
     "type": "library",
+    "homepage": "https://github.com/smochin/instagram-php-crawler",
     "license": "GPL-3.0",
     "authors": [
         {

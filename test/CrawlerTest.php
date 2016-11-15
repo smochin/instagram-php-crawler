@@ -28,13 +28,13 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $media = $this->crawler->getMediaByTag('php');
         $this->assertGreaterThan(0, count($media));
     }
-    
+
     public function testGetMediaByLocation()
     {
         $media = $this->crawler->getMediaByLocation(225963881);
         $this->assertGreaterThan(0, count($media));
     }
-    
+
     public function testGetMediaByUser()
     {
         $media = $this->crawler->getMediaByUser('instagram');
@@ -51,7 +51,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(User::class, $media->getUser());
         $this->assertInstanceOf(Location::class, $media->getLocation());
     }
-    
+
     public function testGetUser()
     {
         $user = $this->crawler->getUser('jamersonweb');
@@ -59,9 +59,9 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(204496727, $user->getId());
         $this->assertInstanceOf(Profile::class, $user->getProfile());
         $this->assertEquals(false, $user->getProfile()->isPrivated());
-        $this->assertEquals(false, $user->getProfile()->isVerified());        
+        $this->assertEquals(false, $user->getProfile()->isVerified());
     }
-    
+
     public function testGetLocation()
     {
         $location = $this->crawler->getLocation(225963881);
@@ -78,7 +78,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Tag::class, $tag);
         $this->assertGreaterThan(0, $tag->getCount());
     }
-    
+
     public function testSearch()
     {
         $result = $this->crawler->search('instagram');

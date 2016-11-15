@@ -27,15 +27,17 @@ class Video extends Media
      * @param \DateTime $created
      * @param User $user
      * @param array $tags
+     * @param int $likes
+     * @param int $comments
      * @param bool $ad
      * @param mixed $caption
      * @param Location $location
      */
-    public function __construct(int $id, string $code, string $url, string $thumb, int $views, Dimension $dimension, \DateTime $created, User $user, array $tags = [], bool $ad = false, $caption = null, Location $location = null)
+    public function __construct(int $id, string $code, string $url, string $thumb, int $views, Dimension $dimension, \DateTime $created, User $user, array $tags = [], int $likes = 0, int $comments = 0, bool $ad = false, $caption = null, Location $location = null)
     {
         $this->thumb = $thumb;
         $this->views = $views;
-        parent::__construct($id, $code, $url, $dimension, $created, $user, $tags, $ad, $caption, $location);
+        parent::__construct($id, $code, $url, $dimension, $created, $user, $tags, $likes, $comments, $ad, $caption, $location);
     }
 
     /**

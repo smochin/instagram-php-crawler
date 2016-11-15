@@ -54,7 +54,7 @@ class Crawler
 
     /**
      * Get a list of recently tagged media
-     * 
+     *
      * @param string $name The name of the hashtag
      * @return array A list of media
      * @throws GuzzleException
@@ -69,7 +69,7 @@ class Crawler
 
     /**
      * Get a list of recent media objects from a given location
-     * 
+     *
      * @param int $id Identification of the location
      * @return array A list of media
      * @throws GuzzleException
@@ -84,7 +84,7 @@ class Crawler
 
     /**
      * Get the most recent media published by a user
-     * 
+     *
      * @param string $username The username of a user
      * @return array A list of media
      * @throws GuzzleException
@@ -99,7 +99,7 @@ class Crawler
 
     /**
      * Gets media asynchronously
-     * 
+     *
      * @param array $codes A list of media codes
      * @return array A list of media
      */
@@ -125,7 +125,7 @@ class Crawler
 
     /**
      * Get information about a media object
-     * 
+     *
      * @param string $code The code of a media
      * @return Media The media
      * @throws GuzzleException
@@ -143,50 +143,54 @@ class Crawler
         $location = null;
         if ($media['location']) {
             $location = LocationFactory::create(
-                (int) $media['location']['id'], 
-                $media['location']['name'], 
+                (int) $media['location']['id'],
+                $media['location']['name'],
                 $media['location']['slug']
             );
         }
         $user = UserFactory::create(
-            (int) $media['owner']['id'], 
-            $media['owner']['username'], 
-            $media['owner']['profile_pic_url'], 
-            $media['owner']['full_name'], 
+            (int) $media['owner']['id'],
+            $media['owner']['username'],
+            $media['owner']['profile_pic_url'],
+            $media['owner']['full_name'],
             $media['owner']['is_private']
-        );        
+        );
         if ($media['is_video']) {
             return MediaFactory::createVideo(
-                (int) $media['id'], 
-                $media['code'], 
-                $media['video_url'], 
-                $media['display_src'], 
-                $media['video_views'], 
+                (int) $media['id'],
+                $media['code'],
+                $media['video_url'],
+                $media['display_src'],
+                $media['video_views'],
                 $media['dimensions'],
                 $media['date'],
                 $user,
-                $media['is_ad'], 
-                $media['caption'] ?? null, 
+                $media['likes']['count'],
+                $media['comments']['count'],
+                $media['is_ad'],
+                $media['caption'] ?? null,
                 $location
             );
         }
 
         return MediaFactory::createPhoto(
-            (int) $media['id'], 
-            $media['code'], 
-            $media['display_src'], 
+            (int) $media['id'],
+            $media['code'],
+            $media['display_src'],
             $media['dimensions'],
             $media['date'],
             $user,
-            $media['is_ad'], 
-            $media['caption'] ?? null, 
-            $location            
+            $media['likes']['count'],
+            $media['comments']['count'],
+            $media['is_ad'],
+            $media['caption'] ?? null,
+            $location
         );
     }
 
     /**
      * Get information about a user
-     * 
+     *
      * @param string $username The username of a user
      * @return User A user
      * @throws GuzzleException
@@ -197,20 +201,23 @@ class Crawler
         $user = json_decode($response->getBody()->getContents(), true)['user'];
 
         return UserFactory::create(
-            (int) $user['id'], 
-            $user['username'], 
-            $user['profile_pic_url'], 
-            $user['full_name'], 
-            $user['is_private'], 
-            $user['is_verified'], 
-            $user['biography'], 
-            $user['external_url']
+            (int) $user['id'],
+            $user['username'],
+            $user['profile_pic_url'],
+            $user['full_name'],
+            $user['is_private'],
+            $user['is_verified'],
+            $user['biography'],
+            $user['external_url'],
+            $user['followed_by']['count'],
+            $user['follows']['count'],
+            $user['media']['count']
         );
     }
 
     /**
      * Get information about a location
-     * 
+     *
      * @param int $id Identification of the location
      * @return Location A location
      * @throws GuzzleException
@@ -221,17 +228,17 @@ class Crawler
         $location = json_decode($response->getBody()->getContents(), true)['location'];
 
         return LocationFactory::create(
-            (int) $location['id'], 
-            $location['name'], 
-            $location['slug'], 
-            $location['lat'], 
+            (int) $location['id'],
+            $location['name'],
+            $location['slug'],
+            $location['lat'],
             $location['lng']
         );
     }
 
     /**
      * Get information about a tag object
-     * 
+     *
      * @param string $name The name of the hashtag
      * @return Tag A hashtag
      * @throws GuzzleException
@@ -246,7 +253,7 @@ class Crawler
 
     /**
      * Search for hashtags, locations, and users
-     * 
+     *
      * @param string $query The term to be searched
      * @return array The result of the search
      * @throws GuzzleException
@@ -266,7 +273,7 @@ class Crawler
 
     /**
      * Creates the data structure of a search
-     * 
+     *
      * @param array $response The search response
      * @return array The result of the search
      */
@@ -278,21 +285,22 @@ class Crawler
         }
         foreach ($response['places'] as $p) {
             $result['locations'][] = LocationFactory::create(
-                $p['place']['location']['pk'], 
-                $p['place']['title'], 
-                $p['place']['slug'], 
-                $p['place']['location']['lat'], 
+                $p['place']['location']['pk'],
+                $p['place']['title'],
+                $p['place']['slug'],
+                $p['place']['location']['lat'],
                 $p['place']['location']['lng']
             );
         }
         foreach ($response['users'] as $u) {
             $result['users'][] = UserFactory::create(
-                $u['user']['pk'], 
-                $u['user']['username'], 
-                $u['user']['profile_pic_url'], 
-                $u['user']['full_name'], 
-                $u['user']['is_private'], 
-                $u['user']['is_verified']
+                $u['user']['pk'],
+                $u['user']['username'],
+                $u['user']['profile_pic_url'],
+                $u['user']['full_name'],
+                $u['user']['is_private'],
+                $u['user']['is_verified'],
+                $u['user']['follower_count']
             );
         }
 
