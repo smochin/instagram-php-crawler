@@ -1,0 +1,35 @@
+{
+    "name": "smochin/instagram-php-crawler",
+    "description": "A simple PHP Crawler for Instagram",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jamerson Silva",
+            "email": "jamersonweb@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "instagram",
+        "http",
+        "crawler"
+    ],
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smochin\\Instagram\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Smochin\\Instagram\\": "test/"
+        }
+    }
+}
