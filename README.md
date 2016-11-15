@@ -1,5 +1,6 @@
 
 # PHP Instagram Crawler
+[![Gitter](https://img.shields.io/badge/GITTER-JOIN%20CHAT%20%E2%86%92-brightgreen.svg?style=flat-square)](https://gitter.im/smochin/instagram-php-crawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Total Downloads](https://img.shields.io/packagist/dt/smochin/instagram-php-crawler.svg?style=flat-square)](https://packagist.org/packages/smochin/instagram-php-crawler)
 [![Latest Stable Version](https://img.shields.io/packagist/v/smochin/instagram-php-crawler.svg?style=flat-square)](https://packagist.org/packages/smochin/instagram-php-crawler)
 
