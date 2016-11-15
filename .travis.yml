@@ -8,7 +8,7 @@ php:
 
 before_script:
   - composer install --prefer-dist -o
-  - phpenv config-rm xdebug.ini
+  - phpenv config-rm xdebug.ini || echo "xdebug not available"
 
 script:
   - ./vendor/bin/phpunit
