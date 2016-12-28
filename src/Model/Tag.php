@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
 class Tag
 {
-
     /**
      * @var string
      */
@@ -19,7 +18,7 @@ class Tag
 
     /**
      * @param string $name
-     * @param int $count
+     * @param int    $count
      */
     public function __construct(string $name, int $count = 0)
     {
@@ -42,5 +41,4 @@ class Tag
     {
         return $this->count;
     }
-
 }

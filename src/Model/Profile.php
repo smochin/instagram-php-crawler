@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
 class Profile
 {
-
     /**
      * @var string
      */
@@ -43,7 +42,7 @@ class Profile
     private $media = 0;
 
     /**
-     * @param bool $privated
+     * @param bool  $privated
      * @param mixed $verified
      * @param mixed $biography
      * @param mixed $website
@@ -76,6 +75,7 @@ class Profile
 
     /**
      * @return bool
+     *
      * @throws \UnexpectedValueException
      */
     public function isVerified(): bool
@@ -126,5 +126,4 @@ class Profile
     {
         return $this->media;
     }
-
 }

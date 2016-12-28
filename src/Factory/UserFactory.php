@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Factory;
 
@@ -9,19 +9,19 @@ use Smochin\Instagram\Model\Profile;
 
 class UserFactory
 {
-
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $username
      * @param string $picture
-     * @param mixed $name
-     * @param mixed $privated
-     * @param mixed $verified
-     * @param mixed $biography
-     * @param mixed $website
-     * @param int $followers
-     * @param int $follows
-     * @param int $media
+     * @param mixed  $name
+     * @param mixed  $privated
+     * @param mixed  $verified
+     * @param mixed  $biography
+     * @param mixed  $website
+     * @param int    $followers
+     * @param int    $follows
+     * @param int    $media
+     *
      * @return User
      */
     public static function create(
@@ -53,5 +53,4 @@ class UserFactory
                 $name
         );
     }
-
 }

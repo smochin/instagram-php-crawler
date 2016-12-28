@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram;
 
 use Smochin\Instagram\Model\Location;
 use Smochin\Instagram\Model\Media;
-use Smochin\Instagram\Model\Photo;
-use Smochin\Instagram\Model\Video;
 use Smochin\Instagram\Model\Tag;
 use Smochin\Instagram\Model\User;
 use Smochin\Instagram\Model\Profile;
@@ -15,7 +13,6 @@ use Smochin\Instagram\Model\Coordinate;
 
 class CrawlerTest extends \PHPUnit_Framework_TestCase
 {
-
     private $crawler;
 
     protected function setUp()

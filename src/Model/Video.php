@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
 class Video extends Media
 {
-
     /**
      * @var int
      */
@@ -18,20 +17,20 @@ class Video extends Media
     private $thumb;
 
     /**
-     * @param int $id
-     * @param string $code
-     * @param string $url
-     * @param string $thumb
-     * @param int $views
+     * @param int       $id
+     * @param string    $code
+     * @param string    $url
+     * @param string    $thumb
+     * @param int       $views
      * @param Dimension $dimension
      * @param \DateTime $created
-     * @param User $user
-     * @param array $tags
-     * @param int $likes
-     * @param int $comments
-     * @param bool $ad
-     * @param mixed $caption
-     * @param Location $location
+     * @param User      $user
+     * @param array     $tags
+     * @param int       $likes
+     * @param int       $comments
+     * @param bool      $ad
+     * @param mixed     $caption
+     * @param Location  $location
      */
     public function __construct(int $id, string $code, string $url, string $thumb, int $views, Dimension $dimension, \DateTime $created, User $user, array $tags = [], int $likes = 0, int $comments = 0, bool $ad = false, $caption = null, Location $location = null)
     {
@@ -55,5 +54,4 @@ class Video extends Media
     {
         return $this->thumb;
     }
-
 }

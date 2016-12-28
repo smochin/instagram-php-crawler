@@ -1,46 +1,41 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
 class Location
 {
-
     /**
-     *
      * @var int
      */
     private $id;
 
     /**
-     *
      * @var string
      */
     private $name;
 
     /**
-     *
      * @var string
      */
     private $slug;
 
     /**
-     *
      * @var Coordinate
      */
     private $coordinate;
 
     /**
-     * @param int $id
-     * @param string $name
-     * @param string $slug
+     * @param int        $id
+     * @param string     $name
+     * @param string     $slug
      * @param Coordinate $coordinate
      */
     public function __construct(
-            int $id, 
-            string $name, 
-            string $slug, 
+            int $id,
+            string $name,
+            string $slug,
             Coordinate $coordinate = null
     ) {
         $this->id = $id;
@@ -72,7 +67,7 @@ class Location
     {
         return $this->slug;
     }
-    
+
     /**
      * @return bool
      */
@@ -88,5 +83,4 @@ class Location
     {
         return $this->coordinate;
     }
-
 }

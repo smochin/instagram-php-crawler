@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram;
 
@@ -19,14 +19,13 @@ use Smochin\Instagram\Factory\MediaFactory;
 use Smochin\Instagram\Factory\TagFactory;
 
 /**
- * This class provides an access api to public Instagram data
+ * This class provides an access api to public Instagram data.
  *
  * @author Jamerson Silva <jamersonweb@gmail.com>
  * @copyright 2016 Smochin
  */
 class Crawler
 {
-
     const BASE_URI = 'https://www.instagram.com';
     const QUERY = ['__a' => 1];
     const TAG_ENDPOINT = '/explore/tags/%s';
@@ -42,7 +41,7 @@ class Crawler
     private $client;
 
     /**
-     * Initializes a new object
+     * Initializes a new object.
      */
     public function __construct()
     {
@@ -53,10 +52,12 @@ class Crawler
     }
 
     /**
-     * Get a list of recently tagged media
+     * Get a list of recently tagged media.
      *
      * @param string $name The name of the hashtag
+     *
      * @return array A list of media
+     *
      * @throws GuzzleException
      */
     public function getMediaByTag(string $name): array
@@ -68,10 +69,12 @@ class Crawler
     }
 
     /**
-     * Get a list of recent media objects from a given location
+     * Get a list of recent media objects from a given location.
      *
      * @param int $id Identification of the location
+     *
      * @return array A list of media
+     *
      * @throws GuzzleException
      */
     public function getMediaByLocation(int $id): array
@@ -83,10 +86,12 @@ class Crawler
     }
 
     /**
-     * Get the most recent media published by a user
+     * Get the most recent media published by a user.
      *
      * @param string $username The username of a user
+     *
      * @return array A list of media
+     *
      * @throws GuzzleException
      */
     public function getMediaByUser(string $username): array
@@ -98,14 +103,15 @@ class Crawler
     }
 
     /**
-     * Gets media asynchronously
+     * Gets media asynchronously.
      *
      * @param array $codes A list of media codes
+     *
      * @return array A list of media
      */
     private function getMediaAsync(array $codes): array
     {
-        $promises = array_map(function($code): PromiseInterface {
+        $promises = array_map(function ($code): PromiseInterface {
             return $this->client->requestAsync('GET', sprintf(self::MEDIA_ENDPOINT, $code));
         }, $codes);
         $results = Promise\settle($promises)->wait();
@@ -124,10 +130,12 @@ class Crawler
     }
 
     /**
-     * Get information about a media object
+     * Get information about a media object.
      *
      * @param string $code The code of a media
+     *
      * @return Media The media
+     *
      * @throws GuzzleException
      */
     public function getMedia(string $code): Media
@@ -189,10 +197,12 @@ class Crawler
     }
 
     /**
-     * Get information about a user
+     * Get information about a user.
      *
      * @param string $username The username of a user
+     *
      * @return User A user
+     *
      * @throws GuzzleException
      */
     public function getUser(string $username): User
@@ -216,10 +226,12 @@ class Crawler
     }
 
     /**
-     * Get information about a location
+     * Get information about a location.
      *
      * @param int $id Identification of the location
+     *
      * @return Location A location
+     *
      * @throws GuzzleException
      */
     public function getLocation(int $id): Location
@@ -237,10 +249,12 @@ class Crawler
     }
 
     /**
-     * Get information about a tag object
+     * Get information about a tag object.
      *
      * @param string $name The name of the hashtag
+     *
      * @return Tag A hashtag
+     *
      * @throws GuzzleException
      */
     public function getTag(string $name): Tag
@@ -252,10 +266,12 @@ class Crawler
     }
 
     /**
-     * Search for hashtags, locations, and users
+     * Search for hashtags, locations, and users.
      *
      * @param string $query The term to be searched
+     *
      * @return array The result of the search
+     *
      * @throws GuzzleException
      */
     public function search(string $query): array
@@ -263,8 +279,8 @@ class Crawler
         $response = $this->client->request('GET', self::SEARCH_ENDPOINT, [
             'query' => [
                 'query' => $query,
-                'context' => self::SEARCH_CONTEXT_PARAM
-            ]
+                'context' => self::SEARCH_CONTEXT_PARAM,
+            ],
         ]);
         $body = json_decode($response->getBody()->getContents(), true);
 
@@ -272,14 +288,15 @@ class Crawler
     }
 
     /**
-     * Creates the data structure of a search
+     * Creates the data structure of a search.
      *
      * @param array $response The search response
+     *
      * @return array The result of the search
      */
     private function loadSearch(array $response): array
     {
-        $result = ['tags' => [], 'locations' => [], 'users' => [],];
+        $result = ['tags' => [], 'locations' => [], 'users' => []];
         foreach ($response['hashtags'] as $t) {
             $result['tags'][] = new Tag($t['hashtag']['name'], $t['hashtag']['media_count']);
         }
@@ -306,5 +323,4 @@ class Crawler
 
         return $result;
     }
-
 }

@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
 abstract class Media
 {
-
     const PHOTO_TYPE = 'photo';
     const VIDEO_TYPE = 'video';
 
@@ -71,19 +70,18 @@ abstract class Media
     private $tags = [];
 
     /**
-     * @param int $id
-     * @param string $code
-     * @param string $url
+     * @param int       $id
+     * @param string    $code
+     * @param string    $url
      * @param Dimension $dimension
      * @param \DateTime $created
-     * @param User $user
-     * @param array $tags
-     * @param int $likes
-     * @param int $comments
-     * @param bool $ad
-     * @param mixed $caption
-     * @param Location $location
-     *
+     * @param User      $user
+     * @param array     $tags
+     * @param int       $likes
+     * @param int       $comments
+     * @param bool      $ad
+     * @param mixed     $caption
+     * @param Location  $location
      */
     public function __construct(
         int $id,
@@ -202,5 +200,4 @@ abstract class Media
     {
         return $this->comments;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Factory;
 
@@ -9,20 +9,20 @@ use Smochin\Instagram\Model\Location;
 
 class LocationFactory
 {
-
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $name
      * @param string $slug
-     * @param mixed $latitude
-     * @param mixed $longitude
+     * @param mixed  $latitude
+     * @param mixed  $longitude
+     *
      * @return Location
      */
     public static function create(
-            int $id, 
-            string $name, 
-            string $slug, 
-            $latitude = null, 
+            int $id,
+            string $name,
+            string $slug,
+            $latitude = null,
             $longitude = null
     ): Location {
         $coordinate = null;
@@ -32,5 +32,4 @@ class LocationFactory
 
         return new Location($id, $name, $slug, $coordinate);
     }
-
 }

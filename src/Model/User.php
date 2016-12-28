@@ -1,16 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Smochin\Instagram\Model;
 
-use Smochin\Instagram\Exception\UndefinedProfileException;
-
 class User
 {
-
     /**
-     * @var type 
+     * @var type
      */
     private $id;
 
@@ -20,34 +17,31 @@ class User
     private $name;
 
     /**
-     *
      * @var string
      */
     private $username;
 
     /**
-     *
      * @var string
      */
     private $picture;
 
     /**
-     *
      * @var Profile
      */
     private $profile;
 
     /**
-     * @param int $id
-     * @param string $username
-     * @param string $picture
+     * @param int     $id
+     * @param string  $username
+     * @param string  $picture
      * @param Profile $profile
-     * @param mixed $name
+     * @param mixed   $name
      */
     public function __construct(
-            int $id, 
-            string $username, 
-            string $picture, 
+            int $id,
+            string $username,
+            string $picture,
             Profile $profile,
             $name = null
     ) {
@@ -97,5 +91,4 @@ class User
     {
         return $this->profile;
     }
-
 }
