@@ -10,8 +10,9 @@ use Smochin\Instagram\Model\Tag;
 use Smochin\Instagram\Model\User;
 use Smochin\Instagram\Model\Profile;
 use Smochin\Instagram\Model\Coordinate;
+use PHPUnit\Framework\TestCase;
 
-class CrawlerTest extends \PHPUnit_Framework_TestCase
+class CrawlerTest extends TestCase
 {
     private $crawler;
 
@@ -40,13 +41,13 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMedia()
     {
-        $media = $this->crawler->getMedia('BMT-CtvhZ7x');
+        $media = $this->crawler->getMedia('BgOJQliAc6d');
         $this->assertInstanceOf(Media::class, $media);
-        $this->assertEquals(1374715176716443377, $media->getId());
+        $this->assertEquals(1733363628813438621, $media->getId());
         $this->assertNotNull($media->getUrl());
         $this->assertInstanceOf(\DateTime::class, $media->getCreated());
         $this->assertInstanceOf(User::class, $media->getUser());
-        $this->assertInstanceOf(Location::class, $media->getLocation());
+        $this->assertNull($media->getLocation());
     }
 
     public function testGetUser()
