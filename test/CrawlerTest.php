@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Smochin\Instagram;
 
+use PHPUnit\Framework\TestCase;
+use Smochin\Instagram\Model\Coordinate;
 use Smochin\Instagram\Model\Location;
 use Smochin\Instagram\Model\Media;
+use Smochin\Instagram\Model\Profile;
 use Smochin\Instagram\Model\Tag;
 use Smochin\Instagram\Model\User;
-use Smochin\Instagram\Model\Profile;
-use Smochin\Instagram\Model\Coordinate;
-use PHPUnit\Framework\TestCase;
 
 class CrawlerTest extends TestCase
 {

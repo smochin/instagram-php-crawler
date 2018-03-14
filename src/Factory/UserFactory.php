@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Smochin\Instagram\Factory;
 
-use Smochin\Instagram\Model\User;
 use Smochin\Instagram\Model\Profile;
+use Smochin\Instagram\Model\User;
 
 class UserFactory
 {

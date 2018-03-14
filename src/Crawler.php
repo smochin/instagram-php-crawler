@@ -6,17 +6,17 @@ namespace Smochin\Instagram;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Exception\GuzzleException;
+use Smochin\Instagram\Factory\LocationFactory;
+use Smochin\Instagram\Factory\MediaFactory;
+use Smochin\Instagram\Factory\TagFactory;
+use Smochin\Instagram\Factory\UserFactory;
 use Smochin\Instagram\Model\Location;
 use Smochin\Instagram\Model\Media;
 use Smochin\Instagram\Model\Tag;
 use Smochin\Instagram\Model\User;
-use Smochin\Instagram\Factory\LocationFactory;
-use Smochin\Instagram\Factory\UserFactory;
-use Smochin\Instagram\Factory\MediaFactory;
-use Smochin\Instagram\Factory\TagFactory;
 
 /**
  * This class provides an access api to public Instagram data.
@@ -47,7 +47,7 @@ class Crawler
     {
         $this->client = new Client([
             'base_uri' => self::BASE_URI,
-            'query' => self::QUERY,
+            'query'    => self::QUERY,
         ]);
     }
 
@@ -56,9 +56,9 @@ class Crawler
      *
      * @param string $name The name of the hashtag
      *
-     * @return array A list of media
-     *
      * @throws GuzzleException
+     *
+     * @return array A list of media
      */
     public function getMediaByTag(string $name): array
     {
@@ -78,9 +78,9 @@ class Crawler
      *
      * @param int $id Identification of the location
      *
-     * @return array A list of media
-     *
      * @throws GuzzleException
+     *
+     * @return array A list of media
      */
     public function getMediaByLocation(int $id): array
     {
@@ -95,9 +95,9 @@ class Crawler
      *
      * @param string $username The username of a user
      *
-     * @return array A list of media
-     *
      * @throws GuzzleException
+     *
+     * @return array A list of media
      */
     public function getMediaByUser(string $username): array
     {
@@ -144,9 +144,9 @@ class Crawler
      *
      * @param string $code The code of a media
      *
-     * @return Media The media
-     *
      * @throws GuzzleException
+     *
+     * @return Media The media
      */
     public function getMedia(string $code): Media
     {
@@ -212,9 +212,9 @@ class Crawler
      *
      * @param string $username The username of a user
      *
-     * @return User A user
-     *
      * @throws GuzzleException
+     *
+     * @return User A user
      */
     public function getUser(string $username): User
     {
@@ -241,9 +241,9 @@ class Crawler
      *
      * @param int $id Identification of the location
      *
-     * @return Location A location
-     *
      * @throws GuzzleException
+     *
+     * @return Location A location
      */
     public function getLocation(int $id): Location
     {
@@ -264,9 +264,9 @@ class Crawler
      *
      * @param string $name The name of the hashtag
      *
-     * @return Tag A hashtag
-     *
      * @throws GuzzleException
+     *
+     * @return Tag A hashtag
      */
     public function getTag(string $name): Tag
     {
@@ -281,15 +281,15 @@ class Crawler
      *
      * @param string $query The term to be searched
      *
-     * @return array The result of the search
-     *
      * @throws GuzzleException
+     *
+     * @return array The result of the search
      */
     public function search(string $query): array
     {
         $response = $this->client->request('GET', self::SEARCH_ENDPOINT, [
             'query' => [
-                'query' => $query,
+                'query'   => $query,
                 'context' => self::SEARCH_CONTEXT_PARAM,
             ],
         ]);
