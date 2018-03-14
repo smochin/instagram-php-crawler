@@ -9,7 +9,7 @@
 A simple PHP Crawler for [Instagram](https://instagram.com).
 
 ## Installation
-Package is available on [Packagist](http://packagist.org/packages/smochin/instagram-client),
+Package is available on [Packagist](https://packagist.org/packages/smochin/instagram-php-crawler),
 you can install it using [Composer](http://getcomposer.org).
 
 ```shell
