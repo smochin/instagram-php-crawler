@@ -65,7 +65,12 @@ class Crawler
         $response = $this->client->request('GET', sprintf(self::TAG_ENDPOINT, $name));
         $body = json_decode($response->getBody()->getContents(), true);
 
-        return $this->getMediaAsync(array_column($body['tag']['media']['nodes'], 'code'));
+        $nodeArrays = [];
+        foreach ($body['graphql']['hashtag']['edge_hashtag_to_media']['edges'] as $index => $node) {
+            $nodeArrays[] = $node['node'];
+        }
+
+        return $this->getMediaAsync(array_column($nodeArrays, 'shortcode'));
     }
 
     /**
@@ -99,7 +104,12 @@ class Crawler
         $response = $this->client->request('GET', sprintf(self::USER_ENDPOINT, $username));
         $body = json_decode($response->getBody()->getContents(), true);
 
-        return $this->getMediaAsync(array_column($body['user']['media']['nodes'], 'code'));
+        $nodeArrays = [];
+        foreach ($body['graphql']['user']['edge_owner_to_timeline_media']['edges'] as $index => $node) {
+            $nodeArrays[] = $node['node'];
+        }
+
+        return $this->getMediaAsync(array_column($nodeArrays, 'shortcode'));
     }
 
     /**
@@ -122,7 +132,7 @@ class Crawler
                 continue;
             }
 
-            $media = json_decode($r['value']->getBody()->getContents(), true)['media'];
+            $media = json_decode($r['value']->getBody()->getContents(), true)['graphql']['shortcode_media'];
             $list[] = $this->loadMedia($media);
         }
 
@@ -141,13 +151,14 @@ class Crawler
     public function getMedia(string $code): Media
     {
         $response = $this->client->request('GET', sprintf(self::MEDIA_ENDPOINT, $code));
-        $media = json_decode($response->getBody()->getContents(), true)['media'];
+        $media = json_decode($response->getBody()->getContents(), true)['graphql']['shortcode_media'];
 
         return $this->loadMedia($media);
     }
 
     private function loadMedia(array $media): Media
     {
+        //var_dump($media['shortcode']);
         $location = null;
         if ($media['location']) {
             $location = LocationFactory::create(
@@ -166,32 +177,32 @@ class Crawler
         if ($media['is_video']) {
             return MediaFactory::createVideo(
                 (int) $media['id'],
-                $media['code'],
+                $media['shortcode'],
                 $media['video_url'],
-                $media['display_src'],
-                $media['video_views'],
+                $media['display_url'],
+                $media['video_view_count'],
                 $media['dimensions'],
-                $media['date'],
+                $media['taken_at_timestamp'],
                 $user,
-                $media['likes']['count'],
-                $media['comments']['count'],
+                $media['edge_media_preview_like']['count'],
+                $media['edge_media_to_comment']['count'],
                 $media['is_ad'],
-                $media['caption'] ?? null,
+                $media['edge_media_to_caption']['edges'][0]['node']['text'] ?? null,
                 $location
             );
         }
 
         return MediaFactory::createPhoto(
             (int) $media['id'],
-            $media['code'],
-            $media['display_src'],
+            $media['shortcode'],
+            $media['display_url'],
             $media['dimensions'],
-            $media['date'],
+            $media['taken_at_timestamp'],
             $user,
-            $media['likes']['count'],
-            $media['comments']['count'],
+            $media['edge_media_preview_like']['count'],
+            $media['edge_media_to_comment']['count'],
             $media['is_ad'],
-            $media['caption'] ?? null,
+            $media['edge_media_to_caption']['edges'][0]['node']['text'] ?? null,
             $location
         );
     }
@@ -208,7 +219,7 @@ class Crawler
     public function getUser(string $username): User
     {
         $response = $this->client->request('GET', sprintf(self::USER_ENDPOINT, $username));
-        $user = json_decode($response->getBody()->getContents(), true)['user'];
+        $user = json_decode($response->getBody()->getContents(), true)['graphql']['user'];
 
         return UserFactory::create(
             (int) $user['id'],
@@ -219,9 +230,9 @@ class Crawler
             $user['is_verified'],
             $user['biography'],
             $user['external_url'],
-            $user['followed_by']['count'],
-            $user['follows']['count'],
-            $user['media']['count']
+            $user['edge_followed_by']['count'],
+            $user['edge_follow']['count'],
+            $user['edge_owner_to_timeline_media']['count']
         );
     }
 
@@ -260,9 +271,9 @@ class Crawler
     public function getTag(string $name): Tag
     {
         $response = $this->client->request('GET', sprintf(self::TAG_ENDPOINT, $name));
-        $tag = json_decode($response->getBody()->getContents(), true)['tag'];
+        $tag = json_decode($response->getBody()->getContents(), true)['graphql']['hashtag'];
 
-        return TagFactory::create($tag['name'], $tag['media']['count']);
+        return TagFactory::create($tag['name'], $tag['edge_hashtag_to_media']['count']);
     }
 
     /**
@@ -311,7 +322,7 @@ class Crawler
         }
         foreach ($response['users'] as $u) {
             $result['users'][] = UserFactory::create(
-                $u['user']['pk'],
+                (int) $u['user']['pk'],
                 $u['user']['username'],
                 $u['user']['profile_pic_url'],
                 $u['user']['full_name'],
