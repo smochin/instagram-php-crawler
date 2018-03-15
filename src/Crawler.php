@@ -313,7 +313,7 @@ class Crawler
         }
         foreach ($response['places'] as $p) {
             $result['locations'][] = LocationFactory::create(
-                $p['place']['location']['pk'],
+                (int) $p['place']['location']['pk'],
                 $p['place']['title'],
                 $p['place']['slug'],
                 $p['place']['location']['lat'],

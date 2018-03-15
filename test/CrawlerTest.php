@@ -82,4 +82,12 @@ class CrawlerTest extends TestCase
         $result = $this->crawler->search('instagram');
         $this->assertGreaterThan(0, count($result));
     }
+
+    public function testSearchOnHashTags()
+    {
+        $result = $this->crawler->search('taipei');
+        $this->assertGreaterThan(0, count($result));
+        $this->assertEquals('taipei', ($result['tags'][0])->getName());
+        $this->assertGreaterThan(8739744, ($result['tags'][0])->getCount());
+    }
 }
