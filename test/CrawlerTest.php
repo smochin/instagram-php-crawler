@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Smochin\Instagram;
 
+use PHPUnit\Framework\TestCase;
+use Smochin\Instagram\Model\Coordinate;
 use Smochin\Instagram\Model\Location;
 use Smochin\Instagram\Model\Media;
+use Smochin\Instagram\Model\Profile;
 use Smochin\Instagram\Model\Tag;
 use Smochin\Instagram\Model\User;
-use Smochin\Instagram\Model\Profile;
-use Smochin\Instagram\Model\Coordinate;
-use PHPUnit\Framework\TestCase;
 
 class CrawlerTest extends TestCase
 {
@@ -81,5 +81,13 @@ class CrawlerTest extends TestCase
     {
         $result = $this->crawler->search('instagram');
         $this->assertGreaterThan(0, count($result));
+    }
+
+    public function testSearchOnHashTags()
+    {
+        $result = $this->crawler->search('taipei');
+        $this->assertGreaterThan(0, count($result));
+        $this->assertEquals('taipei', ($result['tags'][0])->getName());
+        $this->assertGreaterThan(8739744, ($result['tags'][0])->getCount());
     }
 }

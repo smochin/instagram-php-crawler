@@ -74,9 +74,9 @@ class Profile
     }
 
     /**
-     * @return bool
-     *
      * @throws \UnexpectedValueException
+     *
+     * @return bool
      */
     public function isVerified(): bool
     {
