@@ -314,8 +314,8 @@ class Crawler
     }
 
     /**
-     * Set the Guzzle HTTP client with EndCursor
-     * 
+     * Set the Guzzle HTTP client with EndCursor.
+     *
      * @return void
      */
     public function setClientOnEndCursor(): void
