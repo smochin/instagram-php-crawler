@@ -41,6 +41,11 @@ class Crawler
     private $client;
 
     /**
+     * @var string
+     */
+    public $endCursor;
+
+    /**
      * Initializes a new object.
      */
     public function __construct()
@@ -66,9 +71,14 @@ class Crawler
         $body = json_decode($response->getBody()->getContents(), true);
 
         $nodeArrays = [];
-        foreach ($body['graphql']['hashtag']['edge_hashtag_to_media']['edges'] as $index => $node) {
+        $edgeMedia = $body['graphql']['hashtag']['edge_hashtag_to_media'];
+        foreach ($edgeMedia['edges'] as $index => $node) {
             $nodeArrays[] = $node['node'];
         }
+
+        $pageInfo = $edgeMedia['page_info'];
+
+        $this->endCursor = $pageInfo['end_cursor'];
 
         return $this->getMediaAsync(array_column($nodeArrays, 'shortcode'));
     }
@@ -105,9 +115,14 @@ class Crawler
         $body = json_decode($response->getBody()->getContents(), true);
 
         $nodeArrays = [];
-        foreach ($body['graphql']['user']['edge_owner_to_timeline_media']['edges'] as $index => $node) {
+        $edgeMedia = $body['graphql']['user']['edge_owner_to_timeline_media'];
+        foreach ($edgeMedia['edges'] as $index => $node) {
             $nodeArrays[] = $node['node'];
         }
+
+        $pageInfo = $edgeMedia['page_info'];
+
+        $this->endCursor = $pageInfo['end_cursor'];
 
         return $this->getMediaAsync(array_column($nodeArrays, 'shortcode'));
     }
@@ -296,6 +311,19 @@ class Crawler
         $body = json_decode($response->getBody()->getContents(), true);
 
         return $this->loadSearch($body);
+    }
+
+    /**
+     * Set the Guzzle HTTP client with EndCursor
+     * 
+     * @return void
+     */
+    public function setClientOnEndCursor(): void
+    {
+        $this->client = new Client([
+            'base_uri' => self::BASE_URI,
+            'query'    => array_merge(self::QUERY, ['max_id' => $this->endCursor]),
+        ]);
     }
 
     /**

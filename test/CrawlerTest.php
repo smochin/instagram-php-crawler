@@ -117,4 +117,12 @@ class CrawlerTest extends TestCase
         $this->assertEquals('taipei', ($result['tags'][0])->getName());
         $this->assertGreaterThan(8739744, ($result['tags'][0])->getCount());
     }
+
+    public function testSetClientOnEndCursor()
+    {
+        $media = $this->crawler->getMediaByTag('php');
+        $this->assertGreaterThan(0, count($media));
+        $this->crawler->setClientOnEndCursor();
+        $this->assertGreaterThan(0, count($media));
+    }
 }
