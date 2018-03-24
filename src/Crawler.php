@@ -318,7 +318,7 @@ class Crawler
      *
      * @return void
      */
-    public function setClientOnEndCursor(): void
+    public function setClientOnEndCursor()
     {
         $this->client = new Client([
             'base_uri' => self::BASE_URI,
