@@ -9,22 +9,22 @@ class Location
     /**
      * @var int
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * @var string
      */
-    private $slug;
+    public $slug;
 
     /**
      * @var Coordinate
      */
-    private $coordinate;
+    public $coordinate;
 
     /**
      * @param int        $id
